@@ -13,7 +13,7 @@ int main (void) {
   func = create_mir_func_sieve (ctx, NULL, &m);
   MIR_load_module (ctx, func->module);
   MIR_gen_init (ctx, 1);
-  MIR_link (ctx, MIR_set_gen_interface, NULL);
+  MIR_link (ctx, MIR_set_gen_interface, NULL, NULL);
   fun = MIR_gen (ctx, 0, func);
   fun = _MIR_get_thunk_addr (ctx, fun);
   res = fun ();

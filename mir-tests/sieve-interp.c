@@ -18,7 +18,7 @@ int main (void) {
 #endif
   start_time = real_sec_time ();
   MIR_load_module (ctx, m);
-  MIR_link (ctx, MIR_set_interp_interface, NULL);
+  MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
 #if MIR_INTERP_DEBUG
   fprintf (stderr, "++++++ SIEVE after simplification:\n");
   MIR_output (ctx, stderr);

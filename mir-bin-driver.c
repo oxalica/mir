@@ -45,7 +45,7 @@ static void open_libs (void) {
     }
 }
 
-static void *import_resolver (const char *name) {
+static void *import_resolver (void *_data, const char *name) {
   void *sym = NULL;
 
   if (strcmp (name, "dlopen") == 0) return dlopen;
@@ -123,7 +123,7 @@ int main (int argc, char *argv[], char *env[]) {
   }
   open_libs ();
   if (MIR_USE_INTERP) {
-    MIR_link (ctx, MIR_set_interp_interface, import_resolver);
+    MIR_link (ctx, MIR_set_interp_interface, import_resolver, NULL);
 #if MIR_BIN_DEBUG
     fprintf (stderr, "Finish of loading/linking (%d funcs) -- curr_time %.0f usec\n", funcs_num,
              real_usec_time () - start_time);
@@ -143,7 +143,7 @@ int main (int argc, char *argv[], char *env[]) {
     MIR_gen_set_debug_level (ctx, MIR_BIN_DEBUG);
 #endif
     MIR_link (ctx, MIR_USE_GEN ? MIR_set_gen_interface : MIR_set_lazy_gen_interface,
-              import_resolver);
+              import_resolver, NULL);
 #if MIR_BIN_DEBUG
     fprintf (stderr,
              (!MIR_USE_GEN

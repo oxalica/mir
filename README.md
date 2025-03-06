@@ -181,7 +181,7 @@ ex100:    func v, 0
     /* ctx is a context created by MIR_init */
     MIR_load_module (ctx, m1); MIR_load_module (ctx, m2);
     MIR_load_external (ctx, "printf", printf);
-    MIR_link (ctx, MIR_set_interp_interface, import_resolver);
+    MIR_link (ctx, MIR_set_interp_interface, import_resolver, NULL);
     /* or use MIR_set_gen_interface to generate and use the machine code */
     /* or use MIR_set_lazy_gen_interface to generate function code on its 1st call */
     /* use MIR_gen (ctx, func) to explicitly generate the function machine code */

@@ -72,7 +72,7 @@ static void open_libs (void) {
     std_libs[i].handler = dlopen (std_libs[i].name, RTLD_LAZY);
 }
 
-static void *import_resolver (const char *name) {
+static void *import_resolver (void *_data, const char *name) {
   void *sym = NULL;
 
   for (int i = 0; i < sizeof (std_libs) / sizeof (struct lib); i++)
@@ -162,14 +162,14 @@ int main (int argc, char *argv[], char *env[]) {
   MIR_load_external (context, "llvm.fabs.f32", llvm_fabs_f32);
   MIR_load_external (context, "llvm.fabs.f64", llvm_fabs_f64);
   if (interpr_p) {
-    MIR_link (context, MIR_set_interp_interface, import_resolver);
+    MIR_link (context, MIR_set_interp_interface, import_resolver, NULL);
     MIR_interp (context, main_func, &val, 3, (MIR_val_t){.i = 1}, (MIR_val_t){.a = (void *) argv},
                 (MIR_val_t){.a = (void *) env});
     res = val.i;
   } else if (gen_p) {
     MIR_gen_init (context, 1);
     if (gen_debug_p) MIR_gen_set_debug_file (context, 0, stderr);
-    MIR_link (context, MIR_set_gen_interface, import_resolver);
+    MIR_link (context, MIR_set_gen_interface, import_resolver, NULL);
     fun_addr = MIR_gen (context, 0, main_func);
     res = fun_addr (argc, argv, env);
     MIR_gen_finish (context);

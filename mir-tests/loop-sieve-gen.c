@@ -68,7 +68,7 @@ int main (void) {
 #if TEST_GEN_DEBUG
     MIR_gen_set_debug_file (ctx, stderr);
 #endif
-    MIR_link (ctx, MIR_set_gen_interface, NULL);
+    MIR_link (ctx, MIR_set_gen_interface, NULL, NULL);
     for (int i = 0; i < N; i++) fun = MIR_gen (ctx, funcs[i]);
     fprintf (stderr, "MIR_gen end (%d funcs) -- %.0f usec\n", N, real_usec_time () - start_time);
 #if defined(TEST_GENERATION_ONLY)

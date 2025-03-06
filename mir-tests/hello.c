@@ -72,10 +72,10 @@ int main(int argc, char **argv)
   typedef int (*Callback)(const char*);
   int (*boo) (const char *, Callback, unsigned) = NULL;
   if (interp_p) {
-    MIR_link(ctx, MIR_set_interp_interface, NULL);
+    MIR_link(ctx, MIR_set_interp_interface, NULL, NULL);
     boo = func->addr;
   } else if (gen_p) {
-    MIR_link(ctx, MIR_set_gen_interface, NULL);
+    MIR_link(ctx, MIR_set_gen_interface, NULL, NULL);
     boo = MIR_gen(ctx, 0, func);
   } else {
     MIR_output(ctx, stderr);

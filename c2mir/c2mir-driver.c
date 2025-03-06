@@ -360,7 +360,7 @@ float __nan (void) {
 }
 #endif
 
-static void *import_resolver (const char *name) {
+static void *import_resolver (void *_data, const char *name) {
   void *handler, *sym = NULL;
 
   for (size_t i = 0; i < sizeof (std_libs) / sizeof (struct lib); i++)
@@ -820,7 +820,7 @@ int main (int argc, char *argv[], char *env[]) {
       if (interp_exec_p) {
         if (options.verbose_p)
           fprintf (stderr, "MIR link interp start  -- %.0f usec\n", real_usec_time () - start_time);
-        MIR_link (main_ctx, MIR_set_interp_interface, import_resolver);
+        MIR_link (main_ctx, MIR_set_interp_interface, import_resolver, NULL);
         if (options.verbose_p)
           fprintf (stderr, "MIR Link finish        -- %.0f usec\n", real_usec_time () - start_time);
         start_time = real_usec_time ();
@@ -853,7 +853,8 @@ int main (int argc, char *argv[], char *env[]) {
                   gen_exec_p        ? MIR_set_gen_interface
                   : lazy_gen_exec_p ? MIR_set_lazy_gen_interface
                                     : MIR_set_lazy_bb_gen_interface,
-                  import_resolver);
+                  import_resolver,
+                  NULL);
         if (options.verbose_p)
           fprintf (stderr, "MIR link finish        -- %.0f usec\n", real_usec_time () - start_time);
         fun_addr = main_func->addr;

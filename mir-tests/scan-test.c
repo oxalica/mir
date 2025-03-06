@@ -50,7 +50,7 @@ fin:     ret count\n\
   fprintf (stderr, "+++++++++++++After sieve simplification:\n");
   m = DLIST_TAIL (MIR_module_t, *MIR_get_module_list (ctx));
   MIR_load_module (ctx, m);
-  MIR_link (ctx, MIR_set_interp_interface, NULL);
+  MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
   MIR_output (ctx, stderr);
   MIR_finish (ctx);
   return 0;

@@ -10,7 +10,7 @@ int main (void) {
   create_mir_func_with_loop (ctx, &m);
   create_mir_example2 (ctx, &m);
   MIR_load_module (ctx, m);
-  MIR_link (ctx, MIR_set_interp_interface, NULL);
+  MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
   fprintf (stderr, "Simplified code:\n");
   MIR_output (ctx, stderr);
   MIR_finish (ctx);

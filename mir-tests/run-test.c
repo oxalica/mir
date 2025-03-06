@@ -67,21 +67,21 @@ int main (int argc, char *argv[]) {
   MIR_load_external (ctx, "free", free);
   if (interpr_p) {
     assert (execute_p);
-    MIR_link (ctx, MIR_set_interp_interface, NULL);
+    MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
     MIR_interp (ctx, main_func, &val, 0);
     fprintf (stderr, "%s: %lu\n", mir_fname, (unsigned long) val.i);
   } else if (gen_p) {
     MIR_gen_init (ctx);
     if (debug_p) MIR_gen_set_debug_file (ctx, stderr);
     if (execute_p) {
-      MIR_link (ctx, MIR_set_gen_interface, NULL);
+      MIR_link (ctx, MIR_set_gen_interface, NULL, NULL);
       fun_addr = MIR_gen (ctx, main_func);
       res = (int) fun_addr ();
       fprintf (stderr, "%s: %d\n", mir_fname, res);
     }
     MIR_gen_finish (ctx);
   } else {
-    MIR_link (ctx, MIR_set_interp_interface, NULL);
+    MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
     fprintf (stderr, "+++++++++++++++++++After inlining:+++++++++++++++\n");
     MIR_output (ctx, stderr);
   }

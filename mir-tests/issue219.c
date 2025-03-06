@@ -34,10 +34,10 @@ int main (void) {
   MIR_scan_string (ctx, ir_add);
   void* m_add = MIR_get_last_module (ctx);
   MIR_load_module (ctx, m_add);
-  MIR_link (ctx, MIR_set_gen_interface, NULL);
+  MIR_link (ctx, MIR_set_gen_interface, NULL, NULL);
 
   MIR_scan_string (ctx, ir_p2);
   void* m_1p1 = MIR_get_last_module (ctx);
   MIR_load_module (ctx, m_1p1);
-  MIR_link (ctx, MIR_set_gen_interface, NULL);
+  MIR_link (ctx, MIR_set_gen_interface, NULL, NULL);
 }

@@ -1943,7 +1943,7 @@ static int simplify_func (MIR_context_t ctx, MIR_item_t func_item, int mem_float
 static void process_inlines (MIR_context_t ctx, MIR_item_t func_item);
 
 void MIR_link (MIR_context_t ctx, void (*set_interface) (MIR_context_t ctx, MIR_item_t item),
-               void *import_resolver (const char *)) {
+               void *import_resolver (void *, const char *), void *resolver_arg) {
   MIR_item_t item, tab_item, expr_item;
   MIR_type_t type;
   MIR_val_t res;
@@ -1970,7 +1970,7 @@ void MIR_link (MIR_context_t ctx, void (*set_interface) (MIR_context_t ctx, MIR_
         if (simplify_func (ctx, item, TRUE)) item->data = (void *) 1; /* flag inlining */
       } else if (item->item_type == MIR_import_item) {
         if ((tab_item = item_tab_find (ctx, item->u.import_id, &environment_module)) == NULL) {
-          if (import_resolver == NULL || (addr = import_resolver (item->u.import_id)) == NULL)
+          if (import_resolver == NULL || (addr = import_resolver (resolver_arg, item->u.import_id)) == NULL)
             MIR_get_error_func (ctx) (MIR_undeclared_op_ref_error, "import of undefined item %s",
                                       item->u.import_id);
           MIR_load_external (ctx, item->u.import_id, addr);

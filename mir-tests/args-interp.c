@@ -17,7 +17,7 @@ int main (void) {
   m = create_args_module (ctx);
   func = DLIST_TAIL (MIR_item_t, m->items);
   MIR_load_module (ctx, m);
-  MIR_link (ctx, MIR_set_interp_interface, NULL);
+  MIR_link (ctx, MIR_set_interp_interface, NULL, NULL);
 #if MIR_C_INTERFACE
   typedef void (*arg_func) (int8_t, int16_t, int32_t, int64_t, float, double, uint32_t, uint8_t,
                             uint16_t, int32_t, int64_t, float, float, float, float, float, float,

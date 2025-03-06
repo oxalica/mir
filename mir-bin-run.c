@@ -131,7 +131,7 @@ float __nan (void) {
 }
 #endif
 
-static void *import_resolver (const char *name) {
+static void *import_resolver (void *_data, const char *name) {
   void *handler, *sym = NULL;
 
   for (int i = 0; i < sizeof (std_libs) / sizeof (struct lib); i++)
@@ -271,14 +271,14 @@ int main (int argc, char **argv, char **envp) {
   open_extra_libs ();
 
   if (mir_type == MIR_TYPE_INTERP) {
-    MIR_link (mctx, MIR_set_interp_interface, import_resolver);
+    MIR_link (mctx, MIR_set_interp_interface, import_resolver, NULL);
     MIR_interp (mctx, main_func, &val, 3, (MIR_val_t){.i = (argc - 2)},
                 (MIR_val_t){.a = (void *) (argv + 2)}, (MIR_val_t){.a = (void *) envp});
     exit_code = val.i;
   } else {
     MIR_gen_init (mctx);
     MIR_link (mctx, mir_type == MIR_TYPE_GEN ? MIR_set_gen_interface : MIR_set_lazy_gen_interface,
-              import_resolver);
+              import_resolver, NULL);
     uint64_t (*fun_addr) (int, char **, char **) = MIR_gen (mctx, main_func);
     exit_code = fun_addr (argc - 2, argv + 2, envp);
     MIR_gen_finish (mctx);

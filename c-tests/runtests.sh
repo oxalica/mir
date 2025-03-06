@@ -54,7 +54,7 @@ runtest () {
 	if test -f $t.stderr-expect; then stderr_expect_out=$t.stderr-expect; else stderr_expect_out=; fi
 	another_expect=`dirname $t`/`basename $t .c`.expect
 	if test x$expect_out = x && test -f $another_expect; then expect_out=$another_expect; else expect_out=; fi
-	$TIMEOUT sh $execution_program $compiler $t $add_main 2>$stderrf >$outf
+	$TIMEOUT sh $execution_program $compiler $CC_INCLUDE_FLAGS $t $add_main 2>$stderrf >$outf
 	code=$?
 	if test $code = $expect_code; then
 	    if test x$expect_out != x && ! diff --strip-trailing-cr -up $expect_out $outf >$errf;then

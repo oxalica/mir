@@ -63,74 +63,9 @@ struct lib {
 typedef struct lib lib_t;
 
 #if defined(__unix__)
-#if UINTPTR_MAX == 0xffffffff
 static lib_t std_libs[]
-  = {{"/lib/libc.so", NULL},         {"/lib/libm.so", NULL},          {"/lib/libc.so.6", NULL},
-     {"/lib32/libc.so.6", NULL},     {"/lib/libm.so.6", NULL},        {"/lib32/libm.so.6", NULL},
-     {"/lib/libpthread.so.0", NULL}, {"/lib32/libpthread.so.0", NULL}};
+  = {{"libc.so.6", NULL}, {"libm.so.6", NULL}, {"libpthread.so.0", NULL}};
 static const char *std_lib_dirs[] = {"/lib", "/lib32"};
-#elif UINTPTR_MAX == 0xffffffffffffffff
-#if defined(__x86_64__)
-static lib_t std_libs[] = {{"/lib64/libc.so", NULL},
-                           {"/lib/libm.so.6", NULL},
-                           {"/lib64/libc.so.6", NULL},
-                           {"/lib/x86_64-linux-gnu/libc.so.6", NULL},
-                           {"/lib64/libm.so.6", NULL},
-                           {"/lib/x86_64-linux-gnu/libm.so.6", NULL},
-                           {"/usr/lib64/libpthread.so.0", NULL},
-                           {"/lib/x86_64-linux-gnu/libpthread.so.0", NULL},
-                           {"/usr/lib/libc.so", NULL}};
-static const char *std_lib_dirs[] = {"/lib64", "/lib/x86_64-linux-gnu"};
-#elif (__aarch64__)
-static lib_t std_libs[]
-  = {{"/lib64/libc.so", NULL},         {"/lib64/libm.so", NULL},
-     {"/lib64/libc.so.6", NULL},       {"/lib/aarch64-linux-gnu/libc.so.6", NULL},
-     {"/lib64/libm.so.6", NULL},       {"/lib/aarch64-linux-gnu/libm.so.6", NULL},
-     {"/lib64/libpthread.so.0", NULL}, {"/lib/aarch64-linux-gnu/libpthread.so.0", NULL}};
-static const char *std_lib_dirs[] = {"/lib64", "/lib/aarch64-linux-gnu"};
-#elif (__PPC64__)
-static lib_t std_libs[] = {
-  {"/lib64/libc.so", NULL},
-  {"/lib64/libm.so", NULL},
-  {"/lib64/libc.so.6", NULL},
-  {"/lib64/libm.so.6", NULL},
-  {"/lib64/libpthread.so.0", NULL},
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-  {"/lib/powerpc64le-linux-gnu/libc.so.6", NULL},
-  {"/lib/powerpc64le-linux-gnu/libm.so.6", NULL},
-  {"/lib/powerpc64le-linux-gnu/libpthread.so.0", NULL},
-#else
-  {"/lib/powerpc64-linux-gnu/libc.so.6", NULL},
-  {"/lib/powerpc64-linux-gnu/libm.so.6", NULL},
-  {"/lib/powerpc64-linux-gnu/libpthread.so.0", NULL},
-#endif
-};
-static const char *std_lib_dirs[] = {
-  "/lib64",
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-  "/lib/powerpc64le-linux-gnu",
-#else
-  "/lib/powerpc64-linux-gnu",
-#endif
-};
-#elif (__s390x__)
-static lib_t std_libs[]
-  = {{"/lib64/libc.so", NULL},         {"/lib64/libm.so", NULL},
-     {"/lib64/libc.so.6", NULL},       {"/lib/s390x-linux-gnu/libc.so.6", NULL},
-     {"/lib64/libm.so.6", NULL},       {"/lib/s390x-linux-gnu/libm.so.6", NULL},
-     {"/lib64/libpthread.so.0", NULL}, {"/lib/s390x-linux-gnu/libpthread.so.0", NULL}};
-static const char *std_lib_dirs[] = {"/lib64", "/lib/s390x-linux-gnu"};
-#elif (__riscv)
-static lib_t std_libs[]
-  = {{"/lib64/libc.so", NULL},         {"/lib64/libm.so", NULL},
-     {"/lib64/libc.so.6", NULL},       {"/lib/riscv64-linux-gnu/libc.so.6", NULL},
-     {"/lib64/libm.so.6", NULL},       {"/lib/riscv64-linux-gnu/libm.so.6", NULL},
-     {"/lib64/libpthread.so.0", NULL}, {"/lib/riscv64-linux-gnu/libpthread.so.0", NULL}};
-static const char *std_lib_dirs[] = {"/lib64", "/lib/riscv64-linux-gnu"};
-#else
-#error cannot recognize 32- or 64-bit target
-#endif
-#endif
 static const char *lib_suffix = ".so";
 #endif
 

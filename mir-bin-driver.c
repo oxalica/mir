@@ -25,7 +25,7 @@ static struct lib {
   void *handler;
 } libs[] = {
 #if !defined(__APPLE__)
-  {"/lib64/libc.so.6", NULL}, {"/lib64/libm.so.6", NULL}, {"/lib64/libpthread.so.0", NULL}
+  {"libc.so.6", NULL}, {"libm.so.6", NULL}, {"libpthread.so.0", NULL}
 #else
   {"/usr/lib/libc.dylib", NULL}, {"/usr/lib/libm.dylib", NULL}
 #endif

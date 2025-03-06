@@ -85,6 +85,8 @@ else
   COMPILE_AND_LINK = $(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
 endif
 
+export CC_INCLUDE_FLAGS := $(shell echo | $(CC) -E -Wp,-v - |& sed -n '/> search starts here/,/End of search list/{//!{s/^\s*/-I/p}}')
+
 API_VERSION=1
 MAJOR_VERSION=0
 MINOR_VERSION=0
@@ -119,7 +121,7 @@ else
   endif
 endif
 
-C2M_BOOTSTRAP_FLAGS = -DMIR_BOOTSTRAP
+C2M_BOOTSTRAP_FLAGS = -DMIR_BOOTSTRAP $(CC_INCLUDE_FLAGS)
 C2M_BOOTSTRAP_FLAGS0 := $(C2M_BOOTSTRAP_FLAGS)
 ifeq ($(shell sh $(SRC_DIR)/check-threads.sh), ok)
   ifneq ($(CC),cl)

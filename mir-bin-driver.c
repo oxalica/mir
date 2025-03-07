@@ -10,7 +10,7 @@
 
 static size_t curr_input_byte_num;
 
-static int read_byte (MIR_context_t ctx) {
+static int read_byte (void * _arg) {
   if (curr_input_byte_num >= sizeof (mir_code)) return EOF;
   return mir_code[curr_input_byte_num++];
 }
@@ -102,7 +102,7 @@ int main (int argc, char *argv[], char *env[]) {
 
   assert (MIR_USE_INTERP || MIR_USE_GEN || MIR_USE_LAZY_GEN);
   curr_input_byte_num = 0;
-  MIR_read_with_func (ctx, read_byte);
+  MIR_read_with_func (ctx, read_byte, NULL);
 #if MIR_BIN_DEBUG
   fprintf (stderr, "Finish of MIR reading from memory -- curr_time %.0f usec\n",
            real_usec_time () - start_time);

@@ -395,7 +395,7 @@ static void *import_resolver (void *_data, const char *name) {
   return sym;
 }
 
-static int mir_read_func (MIR_context_t ctx MIR_UNUSED) { return t_getc (&curr_input); }
+static int mir_read_func (void *_arg MIR_UNUSED) { return t_getc (&curr_input); }
 
 static const char *get_file_name (const char *name, const char *suffix) {
   const char *res = strrchr (name, slash);
@@ -735,7 +735,7 @@ int main (int argc, char *argv[], char *env[]) {
       FILE *f;
 
       if (bin_p) {
-        MIR_read_with_func (main_ctx, mir_read_func);
+        MIR_read_with_func (main_ctx, mir_read_func, NULL);
       } else {
         curr_input.code_len++; /* include zero byte */
         MIR_scan_string (main_ctx, (char *) curr_input.code);
